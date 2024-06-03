@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+{% endblock %}
+
+{% block body %}
+<header class="header">
+  <nav class="nav__container">
+    <div class="nav__logo">
+      <h1 class="logo"><img src="{{ asset('images/symfony.png') }}" alt="image" class="img
+        img-fluid" style="width: 10vh; height: 10vh;  margin: 0 auto; display: block;"></</h1>
+    </div>
+    <ul class="nav__links">
+      <li class="nav__link">
+        <a href="/home">Accueil</a>
+      </li>
+      <li class="nav__link">
+        <a href="/user">Liste des utilisateurs</a>
+      </li>
+      <li class="nav__link">
+        <a href="/devis">Devis</a>
+      </li>
+    </ul>
+    <button class="btn btn--primary"><a class="nav-link" href="{{ path('app_logout') }}" style="float:right">Déconnexion</a></button>
+  </nav>
+</header>
+
+<div class="container mt-4">
+    <h1>Détails de l'utilisateur</h1>
+    <div class="card">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>ID:</strong> {{ user.id }}</li>
+                <li class="list-group-item"><strong>Nom:</strong> {{ user.nom }}</li>
+                <li class="list-group-item"><strong>Prénom:</strong> {{ user.prenom }}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+                <li class="list-group-item"><strong>Genre:</strong> {{ user.genre }}</li>
+                <li class="list-group-item"><strong>RGPD:</strong> {{ user.rgpd ? 'Oui' : 'Non' }}</li>
+            </ul>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('user_edit', {id: user.id}) }}" class="btn btn-warning">Éditer</a>
+            <form method="post" action="{{ path('user_delete', {id: user.id}) }}" style="display:inline-block;">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+            <a href="{{ path('user_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

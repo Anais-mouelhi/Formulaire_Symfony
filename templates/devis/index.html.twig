@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<header class="header">
+  <nav class="nav__container">
+    <div class="nav__logo">
+      <h1 class="logo"><img src="{{ asset('images/symfony.png') }}" alt="image" class="img
+        img-fluid" style="width: 10vh; height: 10vh;  margin: 0 auto; display: block;"></</h1>
+    </div>
+    <ul class="nav__links">
+      <li class="nav__link">
+        <a href="/home">Accueil</a>
+      </li>
+      <li class="nav__link">
+        <a href="/user">Liste des utilisateurs</a>
+      </li>
+      <li class="nav__link">
+        <a href="/devis">Devis</a>
+      </li>
+    </ul>
+    <button class="btn btn--primary"><a class="nav-link" href="{{ path('app_logout') }}" style="float:right">Déconnexion</a></button>
+  </nav>
+</header>
+
+<div class="container mt-4">
+    <h1>Liste des devis</h1>
+    <div class="button-container mb-3">
+        <button class="btn btn-primary"><a href="{{ path('devis_create') }}" class="text-white">Créer Devis</a></button>
+    </div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom du client</th>
+                <th>Description</th>
+                <th>Montant</th>
+                <th>Date de création</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for devis in devis %}
+                <tr>
+                    <td>{{ devis.id }}</td>
+                    <td>{{ devis.clientName }}</td>
+                    <td>{{ devis.description }}</td>
+                    <td>{{ devis.amount }}</td>
+                    <td>{{ devis.createdAt ? devis.createdAt|date('Y-m-d H:i') : '' }}</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="{{ path('devis_edit', {id: devis.id}) }}">Éditer</a>
+                        <form action="{{ path('devis_delete', {id: devis.id}) }}" method="post" style="display:inline-block;">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ devis.id) }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+                        <a class="btn btn-info btn-sm" href="{{ path('devis_download', {id: devis.id}) }}">Télécharger PDF</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

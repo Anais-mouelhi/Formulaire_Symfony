@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<header class="header">
+  <nav class="nav__container">
+    <div class="nav__logo">
+      <h1 class="logo"><img src="{{ asset('images/symfony.png') }}" alt="image" class="img
+        img-fluid" style="width: 10vh; height: 10vh;  margin: 0 auto; display: block;"></</h1>
+    </div>
+    <ul class="nav__links">
+      <li class="nav__link">
+        <a href="/home">Accueil</a>
+      </li>
+      <li class="nav__link">
+        <a href="/user">Liste des utilisateurs</a>
+      </li>
+      <li class="nav__link">
+        <a href="/devis">Devis</a>
+      </li>
+    </ul>
+    <button class="btn btn--primary"><a class="nav-link" href="{{ path('app_logout') }}" style="float:right">Déconnexion</a></button>
+  </nav>
+</header>
+
+<div class="container mt-4">
+    <h1>Créer un utilisateur</h1>
+
+    <div class="form-container">
+        {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.prenom) }}
+                {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.genre) }}
+                {{ form_widget(form.genre, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.rgpd) }}
+                {{ form_widget(form.rgpd, {'attr': {'class': 'form-check-input'}}) }}
+            </div>
+            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un Devis{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+{% endblock %}
+
+{% block body %}
+<header class="header">
+  <nav class="nav__container">
+    <div class="nav__logo">
+      <h1 class="logo"><img src="{{ asset('images/symfony.png') }}" alt="image" class="img
+        img-fluid" style="width: 10vh; height: 10vh;  margin: 0 auto; display: block;"></</h1>
+    </div>
+    <ul class="nav__links">
+      <li class="nav__link">
+        <a href="{{ path('app_home') }}">Accueil</a>
+      </li>
+      <li class="nav__link">
+        <a href="{{ path('user_index') }}">Liste des utilisateurs</a>
+      </li>
+      <li class="nav__link">
+        <a href="{{ path('devis_index') }}">Devis</a>
+      </li>
+    </ul>
+    <button class="btn btn--primary">
+      <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+    </button>
+  </nav>
+</header>
+
+<div class="container mt-4">
+  
+
+    <h1>Créer un devis</h1>
+    
+
+    {{ form_start(form) }}
+        <div class="form-section">
+            <div class="form-group">
+                {{ form_label(form.clientName) }}
+                {{ form_widget(form.clientName, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.clientName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.description) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.amount) }}
+                {{ form_widget(form.amount, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.amount) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.createdAt) }}
+                {{ form_widget(form.createdAt, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.createdAt) }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('devis_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+</div>
+{% endblock %}

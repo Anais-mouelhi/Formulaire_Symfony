@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<header class="header">
+  <nav class="nav__container">
+    <div class="nav__logo">
+      <h1 class="logo"><img src="{{ asset('images/symfony.png') }}" alt="image" class="img
+        img-fluid" style="width: 10vh; height: 10vh;  margin: 0 auto; display: block;"></</h1>
+    </div>
+    <ul class="nav__links">
+      <li class="nav__link">
+        <a href="/home">Accueil</a>
+      </li>
+      <li class="nav__link">
+      
+        <a href="/user">Liste des utilisateurs</a>
+      </li>
+      <li class="nav__link">
+        <a href="/devis">Devis</a>
+      </li>
+    </ul>
+    <button class="btn btn--primary">
+      <a class="nav-link" href="{{ path('app_logout') }}" style="float:right">Déconnexion</a>
+    </button>
+  </nav>
+</header>
+
+<div class="container mt-4">
+    <h1>Liste des utilisateurs</h1>
+    <button class="btn btn-primary mb-3"><a href="{{ path('user_create') }}" class="text-white">Créer User</a></button>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Genre</th>
+                <th>RGPD</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.genre }}</td>
+                    <td>{{ user.rgpd ? 'Oui' : 'Non' }}</td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('user_show', {id: user.id}) }}">Voir</a>
+                        <a class="btn btn-warning" href="{{ path('user_edit', {id: user.id}) }}">Éditer</a>
+                        <form method="post" action="{{ path('user_delete', {id: user.id}) }}" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                            <button class="btn btn-danger" type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

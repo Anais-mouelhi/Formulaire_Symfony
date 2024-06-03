@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+{% endblock %}
+
+{% block body %}
+<header class="header">
+  <nav class="nav__container">
+    <div class="nav__logo">
+      <h1 class="logo"> <img src="{{ asset('images/symfony.png') }}" alt="image" class="img
+        img-fluid" style="width: 10vh; height: 10vh;  margin: 0 auto; display: block;"></h1>
+    </div>
+    <ul class="nav__links">
+     <li class="nav__link">
+        <a href="/home">Accueil</a>
+      </li>
+      <li class="nav__link">
+        <a href="/user">Liste des utilisateurs</a>
+      </li>
+      <li class="nav__link">
+        <a href="/devis">Devis</a>
+      </li>
+    </ul>
+    <button class="btn btn--primary"><a class="nav-link" href="{{ path('app_logout') }}" style="float:right">Déconnexion</a></button>
+  </nav>
+</header>
+
+<div class="container mt-4">
+    {% if app.user %}
+        <h1>Bienvenue, {{ app.user.userIdentifier }}</h1>
+        <!-- ajouter une image -->
+        <img src="{{ asset('images/max-duzij-qAjJk-un3BI-unsplash.jpg') }}" alt="image" class="img
+        img-fluid" style="width: 100vh; height: 70vh;  margin: 0 auto; display: block;">
+    
+    {% endif %}
+
+    
+
+</div>
+{% endblock %}
